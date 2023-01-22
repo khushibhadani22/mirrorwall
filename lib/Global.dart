@@ -1,4 +1,5 @@
 class Global {
+  static List<String> allBookmark = [];
   static List<Map<dynamic, dynamic>> website = [
     {
       'image': 'assets/image/netfilx1.jpg',
@@ -44,6 +45,11 @@ class Global {
       'image': 'assets/image/tutoriyal.jpg',
       'name': 'TutorialsPoint',
       'uri': 'https://www.tutorialspoint.com/'
+    },
+    {
+      'image': 'assets/image/flutter.jpg',
+      'name': 'Dart Packages',
+      'uri': 'https://pub.dev/',
     },
   ];
 }

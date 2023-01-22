@@ -24,7 +24,7 @@ class Detail extends StatefulWidget {
 class _DetailState extends State<Detail> {
   InAppWebViewController? inAppWebViewController;
   late PullToRefreshController pullToRefreshController;
-
+  int i = 0;
   @override
   void initState() {
     super.initState();
@@ -79,7 +79,58 @@ class _DetailState extends State<Detail> {
               icon: const Icon(Icons.arrow_forward_ios),
               color: Colors.white,
             ),
+            IconButton(
+              onPressed: () async {
+                showDialog(
+                    context: context,
+                    builder: (context) {
+                      return AlertDialog(
+                        title: const Center(
+                          child: Text(
+                            "BookMarks",
+                            style: TextStyle(
+                                color: Colors.black,
+                                fontWeight: FontWeight.bold),
+                          ),
+                        ),
+                        content: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            children: Global.allBookmark
+                                .map((e) => GestureDetector(
+                                      onTap: () async {
+                                        Navigator.of(context).pop();
+                                        await inAppWebViewController!.loadUrl(
+                                            urlRequest:
+                                                URLRequest(url: Uri.parse(e)));
+                                      },
+                                      child: Center(
+                                        child: Text(
+                                          e,
+                                          style: const TextStyle(
+                                              color: Colors.black,
+                                              fontWeight: FontWeight.bold),
+                                        ),
+                                      ),
+                                    ))
+                                .toList()),
+                      );
+                    });
+              },
+              icon: const Icon(Icons.bookmark_add),
+              color: Colors.white,
+            ),
           ],
+        ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: Colors.transparent,
+        onPressed: () async {
+          Uri? uri = await inAppWebViewController!.getUrl();
+
+          Global.allBookmark.add(uri!.toString());
+        },
+        child: const Icon(
+          Icons.bookmark_add_outlined,
         ),
       ),
       body: InAppWebView(

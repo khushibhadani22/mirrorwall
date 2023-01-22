@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 
 import 'Details.dart';
 import 'Global.dart';
@@ -26,7 +27,7 @@ class _MyAppState extends State<MyApp> {
     return Scaffold(
       appBar: AppBar(
         title: const Text(
-          "WebSites/Platform",
+          "WebSites",
           style: TextStyle(color: Colors.black),
         ),
         centerTitle: true,
