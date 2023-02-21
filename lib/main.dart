@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 
 import 'Details.dart';
 import 'Global.dart';
@@ -21,6 +22,8 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
+  InAppWebViewController? inAppWebViewController;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -29,6 +32,49 @@ class _MyAppState extends State<MyApp> {
           "WebSites",
           style: TextStyle(color: Colors.black),
         ),
+        actions: [
+          IconButton(
+              onPressed: () async {
+                showDialog(
+                    context: context,
+                    builder: (context) {
+                      return AlertDialog(
+                        title: const Center(
+                          child: Text(
+                            "BookMarks",
+                            style: TextStyle(
+                                color: Colors.black,
+                                fontWeight: FontWeight.bold),
+                          ),
+                        ),
+                        content: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            children: Global.allBookmark
+                                .map((e) => GestureDetector(
+                                      onTap: () async {
+                                        Navigator.of(context).pop();
+                                        await inAppWebViewController!.loadUrl(
+                                            urlRequest:
+                                                URLRequest(url: Uri.parse(e)));
+                                      },
+                                      child: Center(
+                                        child: Text(
+                                          e,
+                                          style: const TextStyle(
+                                              color: Colors.black,
+                                              fontWeight: FontWeight.bold),
+                                        ),
+                                      ),
+                                    ))
+                                .toList()),
+                      );
+                    });
+              },
+              icon: const Icon(
+                Icons.bookmark_outline,
+                color: Colors.black,
+              ))
+        ],
         centerTitle: true,
         backgroundColor: Colors.white,
       ),
